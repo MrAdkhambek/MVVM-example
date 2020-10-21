@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MVVM</string>
+    <string name="reply">Reply</string>
+    <string name="sample_error">Sample Error</string>
 </resources>

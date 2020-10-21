@@ -18,5 +18,4 @@ object ApiModule {
     fun provideMainAPI(
         retrofit: Retrofit
     ): MainAPI = retrofit.create(MainAPI::class.java)
-
 }

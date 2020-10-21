@@ -14,8 +14,11 @@ typealias SellResponse = Response<BaseResponse<SellResult>>
 data class SellDTO(
 
     val id: Int,
-
     val sell: Boolean
+)
+
+data class SellEvent(
+    val list: SellResult
 )
 
 typealias SellItems = List<SellItem>

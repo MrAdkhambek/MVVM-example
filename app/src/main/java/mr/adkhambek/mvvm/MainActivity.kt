@@ -1,5 +1,6 @@
 package mr.adkhambek.mvvm
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,7 @@ import mr.adkhambek.mvvm.model.SellResult
 import mr.adkhambek.mvvm.mvp.MainPresenter
 import mr.adkhambek.mvvm.mvp.MainView
 import mr.adkhambek.mvvm.network.MainAPI
+import mr.adkhambek.mvvm.ui.SecondActivity
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -67,6 +69,10 @@ class MainActivity :
         fab = findViewById(R.id.counter_fab)
         fab.setOnClickListener {
             presenter.onSellAction()
+        }
+
+        fab.setOnClickListener {
+            startActivity(Intent(this, SecondActivity::class.java))
         }
 
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)

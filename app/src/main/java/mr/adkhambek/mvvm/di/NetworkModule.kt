@@ -6,6 +6,8 @@ import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
+import com.github.nkzawa.socketio.client.IO
+import com.github.nkzawa.socketio.client.Socket
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -13,6 +15,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import mr.adkhambek.mvvm.constants.BASE_URL
+import mr.adkhambek.mvvm.constants.SOCKET_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
@@ -86,4 +89,11 @@ object NetworkModule {
         .addInterceptor(chuckerInterceptor)
         .addInterceptor(httpLoggingInterceptor)
         .build()
+
+
+    @Provides
+    @Singleton
+    fun getSocketIO(): Socket {
+        return IO.socket(SOCKET_URL)
+    }
 }

@@ -27,7 +27,6 @@ class MainPresenterImpl(
         view?.swipeState(true)
         scope.launch {
             try {
-                delay(5000)
                 val products: BaseResponse<List<ProductDTO>> = api.loadProducts()
                 products.data?.let {
                     view?.showProducts(it)
