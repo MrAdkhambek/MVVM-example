@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MVVM"
         tools:targetApi="n">
-        <activity android:name=".ui.SecondActivity"></activity>
+        <activity android:name=".ui.SecondActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

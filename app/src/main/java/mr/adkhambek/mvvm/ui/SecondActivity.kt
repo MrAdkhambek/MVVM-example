@@ -21,12 +21,15 @@ import mr.adkhambek.mvvm.model.ProductDTO
 import mr.adkhambek.mvvm.model.ProductResource
 import mr.adkhambek.mvvm.model.ResourceUI
 import mr.adkhambek.mvvm.model.SellEvent
+import mr.adkhambek.mvvm.utils.LocationUtil
 
 
 @AndroidEntryPoint
 class SecondActivity : AppCompatActivity(R.layout.activity_second) {
 
     private val viewModel: SecondActivityVM by viewModels()
+
+    private var locationUtil: LocationUtil? = null
 
     private val sellObserver: Observer<SellEvent> = Observer { sellEvent ->
         viewModel.onLoadProducts()
@@ -74,8 +77,20 @@ class SecondActivity : AppCompatActivity(R.layout.activity_second) {
             onLoadProducts()
         }
 
+        locationUtil = LocationUtil(this.applicationContext, lifecycle)
+
         val rv: RecyclerView = findViewById(R.id.recyclerView)
         setupRecyclerView(rv)
+    }
+
+    override fun onResume() {
+        super.onResume()
+//        locationUtil?.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+//        locationUtil?.onPause()
     }
 
     private fun setupRecyclerView(recycler: RecyclerView): Unit = with(recycler) {
