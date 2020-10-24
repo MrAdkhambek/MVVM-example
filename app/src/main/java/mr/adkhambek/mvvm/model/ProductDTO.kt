@@ -3,6 +3,7 @@ package mr.adkhambek.mvvm.model
 import mr.adkhambek.mvvm.network.BaseResponse
 import retrofit2.Response
 
+
 typealias Products = List<ProductDTO>
 
 typealias ProductResource = ResourceUI<Products>

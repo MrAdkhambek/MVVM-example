@@ -24,3 +24,6 @@ class MainRepository @Inject constructor(
     }
 }
 
+class UserRepository {
+
+}
