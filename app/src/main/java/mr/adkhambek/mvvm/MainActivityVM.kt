@@ -1,18 +1,15 @@
 package mr.adkhambek.mvvm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import mr.adkhambek.mvvm.model.ProductDTO
 import mr.adkhambek.mvvm.model.Products
-import mr.adkhambek.mvvm.network.BaseResponse
-import mr.adkhambek.mvvm.network.MainAPI
+import mr.adkhambek.mvvm.usecase.load.LoadProductsUseCase
+import mr.adkhambek.mvvm.usecase.sell.SellUseCase
 
 
 class MainActivityVM(
-    private val api: MainAPI
+    private val sellUseCase: SellUseCase,
+    private val loadProductsUseCase: LoadProductsUseCase
 ) : ViewModel() {
 
     private val mProductsLiveData: MutableLiveData<Products> = MutableLiveData()
@@ -20,8 +17,18 @@ class MainActivityVM(
 
     init {
         viewModelScope.launch {
-            val products: BaseResponse<List<ProductDTO>> = api.loadProducts()
-            products.data?.let(mProductsLiveData::setValue)
+
         }
+    }
+}
+
+class MainActivityVMF(
+    private val sellUseCase: SellUseCase,
+    private val loadProductsUseCase: LoadProductsUseCase,
+) : ViewModelProvider.Factory {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return MainActivityVM(sellUseCase, loadProductsUseCase) as T
     }
 }

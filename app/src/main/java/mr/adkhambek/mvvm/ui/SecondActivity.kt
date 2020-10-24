@@ -1,6 +1,7 @@
 package mr.adkhambek.mvvm.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -28,8 +29,6 @@ import mr.adkhambek.mvvm.utils.LocationUtil
 class SecondActivity : AppCompatActivity(R.layout.activity_second) {
 
     private val viewModel: SecondActivityVM by viewModels()
-
-    private var locationUtil: LocationUtil? = null
 
     private val sellObserver: Observer<SellEvent> = Observer { sellEvent ->
         viewModel.onLoadProducts()
@@ -74,10 +73,9 @@ class SecondActivity : AppCompatActivity(R.layout.activity_second) {
         viewModel.apply {
             sellLiveData.observe(this@SecondActivity, sellObserver)
             productsLiveData.observe(this@SecondActivity, productsObserver)
-            onLoadProducts()
         }
 
-        locationUtil = LocationUtil(this.applicationContext, lifecycle)
+        Log.d("SecondActivityVM", viewModel.toString())
 
         val rv: RecyclerView = findViewById(R.id.recyclerView)
         setupRecyclerView(rv)

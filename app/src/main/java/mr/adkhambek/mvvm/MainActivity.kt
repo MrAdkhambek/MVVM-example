@@ -3,6 +3,7 @@ package mr.adkhambek.mvvm
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -13,23 +14,18 @@ import coil.load
 import com.adam.leo.LeoAdapter
 import com.adam.leo.recycler.setupAdapter
 import com.andremion.counterfab.CounterFab
-import com.chuckerteam.chucker.api.ChuckerCollector
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import mr.adkhambek.mvvm.di.ApiModule
-import mr.adkhambek.mvvm.di.NetworkModule
 import mr.adkhambek.mvvm.model.ProductDTO
 import mr.adkhambek.mvvm.model.Products
 import mr.adkhambek.mvvm.model.SellResult
 import mr.adkhambek.mvvm.mvp.MainPresenter
 import mr.adkhambek.mvvm.mvp.MainView
-import mr.adkhambek.mvvm.network.MainAPI
 import mr.adkhambek.mvvm.ui.SecondActivity
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
+import mr.adkhambek.mvvm.utils.getLoadProductsUseCase
+import mr.adkhambek.mvvm.utils.getMainAPI
+import mr.adkhambek.mvvm.utils.getMainRepository
+import mr.adkhambek.mvvm.utils.getSellUseCase
 
 
 @AndroidEntryPoint
@@ -40,28 +36,26 @@ class MainActivity :
     private lateinit var leoAdapter: LeoAdapter<ProductDTO>
     private lateinit var presenter: MainPresenter
 
+//    val viewModel: MainActivityVM by viewModels {
+//        val mainAPI = getMainAPI()
+//        val mainRepository = getMainRepository(mainAPI)
+//        MainActivityVMF(
+//            getSellUseCase(mainRepository),
+//            getLoadProductsUseCase(mainRepository)
+//        )
+//    }
+
     private lateinit var fab: CounterFab
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val chuckCollector: ChuckerCollector = NetworkModule.provideChuckerCollector(this)
-        val chuck: ChuckerInterceptor =
-            NetworkModule.provideChuckerInterceptor(this, chuckCollector)
-
-        val httpLoggingInterceptor: HttpLoggingInterceptor =
-            NetworkModule.provideHttpLoggingInterceptor()
-
-        val gson: Gson = NetworkModule.provideGson()
-        val okHttpClient: OkHttpClient = NetworkModule.provideClient(chuck, httpLoggingInterceptor)
-
-        val retrofit: Retrofit = NetworkModule.provideRetrofit(gson, okHttpClient)
-        val mainAPI: MainAPI = ApiModule.provideMainAPI(retrofit)
+        val mainAPI = getMainAPI()
 
         presenter = MainPresenterImpl(mainAPI)
         presenter.onAttach(this)
-
 
         val rv: RecyclerView = findViewById(R.id.recyclerView)
         setupRecyclerView(rv)

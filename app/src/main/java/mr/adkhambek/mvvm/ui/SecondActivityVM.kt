@@ -18,14 +18,15 @@ class SecondActivityVM @ViewModelInject constructor(
     private val socket: SocketUtil
 ) : ViewModel() {
 
-    init {
-        socket.connect()
-    }
-
     val sellLiveData: LiveData<SellEvent> = socket.EventLiveData(SellEvent::class.java, "sell")
 
     private val mProductsLiveData: MutableLiveData<ProductResource> = MutableLiveData()
     val productsLiveData: LiveData<ProductResource> get() = mProductsLiveData
+
+    init {
+        socket.connect()
+        onLoadProducts()
+    }
 
     fun onLoadProducts() {
         viewModelScope.launch {

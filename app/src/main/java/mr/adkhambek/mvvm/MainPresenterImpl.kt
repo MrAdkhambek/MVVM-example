@@ -18,8 +18,7 @@ class MainPresenterImpl(
 
     override var view: MainView? = null
 
-    private val scope: CoroutineScope =
-        CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     private val basket: MutableList<ProductDTO> = arrayListOf()
 
@@ -52,7 +51,6 @@ class MainPresenterImpl(
 
                 val sellResult: BaseResponse<SellResult> = api.sellProducts(sellItems)
                 if (sellResult.statusCode == 200) sellResult.data?.let { list ->
-
                     view?.showResult(list)
                 }
                 else throw Exception("${sellResult.message} ${sellResult.statusCode}")
