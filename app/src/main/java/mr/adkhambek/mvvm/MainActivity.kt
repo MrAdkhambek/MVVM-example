@@ -65,8 +65,9 @@ class MainActivity :
             presenter.onSellAction()
         }
 
-        fab.setOnClickListener {
+        fab.setOnLongClickListener {
             startActivity(Intent(this, SecondActivity::class.java))
+            true
         }
 
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
