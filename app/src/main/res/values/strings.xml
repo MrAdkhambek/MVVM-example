@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MVVM</string>
+
+    <string name="error_network">some error from network</string>
+    <string name="error_network_json">{ \"message\" : \"%s\" }</string>
+    <string name="error_data_null">Data must not be null</string>
 </resources>
