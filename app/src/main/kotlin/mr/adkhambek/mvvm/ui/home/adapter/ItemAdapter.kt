@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import mr.adkhambek.mvvm.databinding.LayoutItemBinding
 import mr.adkhambek.mvvm.model.ItemDTO
 
@@ -26,6 +27,14 @@ class ItemAdapter : ListAdapter<ItemDTO, ItemAdapter.ItemVH>(COMPARATOR) {
     override fun onBindViewHolder(holder: ItemVH, position: Int) = with(holder) {
         val item = getItem(absoluteAdapterPosition)
 
-        binding.root.text = item.name
+        binding.apply {
+            nameTextView.text = item.name
+            startDateTextView.text = item.startDate
+            endDateTextView.text = item.endDate
+
+            imageView.load(item.icon)
+        }
+
+        Unit
     }
 }
